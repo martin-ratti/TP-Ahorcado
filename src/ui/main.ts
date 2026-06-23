@@ -2,17 +2,17 @@ import { Ahorcado } from "../domain/Ahorcado";
 
 export function mountApp(root: HTMLElement, word: string): void {
   const game = new Ahorcado(word);
-  render(root, game);
+  render(root, game, "");
 }
 
-function render(root: HTMLElement, game: Ahorcado): void {
-  const mensaje = game.ganado() ? "GANASTE" : game.perdido() ? "PERDISTE" : "";
+function render(root: HTMLElement, game: Ahorcado, mensaje: string): void {
+  const mensajeFin = game.ganado() ? "GANASTE" : game.perdido() ? "PERDISTE" : "";
 
   root.innerHTML = `
     <h1>Ahorcado</h1>
     <p data-testid="word">${game.palabraEnmascarada()}</p>
     <p data-testid="lives">${game.vidas()}</p>
-    <p data-testid="message">${mensaje}</p>
+    <p data-testid="message">${mensajeFin || mensaje}</p>
     <input type="text" maxlength="1" placeholder="Letra" />
     <button>Adivinar</button>
   `;
@@ -23,9 +23,10 @@ function render(root: HTMLElement, game: Ahorcado): void {
   const handleGuess = () => {
     const letra = input.value.trim();
     if (!letra) return;
-    game.adivinar(letra);
+    const resultado = game.adivinar(letra);
     input.value = "";
-    render(root, game);
+    const aviso = resultado === "repetida" ? "Letra ya ingresada" : "";
+    render(root, game, aviso);
   };
 
   button.addEventListener("click", handleGuess);
