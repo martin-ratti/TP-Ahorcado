@@ -54,3 +54,18 @@ describe("Ahorcado - fallar letra", () => {
     expect(juego.vidas()).toBe(3);
   });
 });
+
+describe("Ahorcado - ganar", () => {
+  it("ganado() es true cuando se adivinaron todas las letras", () => {
+    const juego = new Ahorcado("OSO");
+    juego.adivinar("O");
+    juego.adivinar("S");
+    expect(juego.ganado()).toBe(true);
+  });
+
+  it("ganado() es false si falta al menos una letra", () => {
+    const juego = new Ahorcado("OSO");
+    juego.adivinar("O");
+    expect(juego.ganado()).toBe(false);
+  });
+});
