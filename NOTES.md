@@ -154,7 +154,7 @@ cambiaría una sola línea.
 
 ## AT8 — Jugar de nuevo
 
-> El usuario gana/pierde y presiona "Jugar de nuevo" → estado reseteado sin recargar.
+> El usuario gana/pierde y presiona "Jugar de nuevo" → nueva partida con palabra al azar, sin recargar la página.
 
 ### UTs del objeto `Ahorcado`
 
@@ -164,10 +164,15 @@ cambiaría una sola línea.
 | 2 | `reiniciar()` resetea la palabra enmascarada a guiones | El tablero tiene que volver a estar oculto |
 | 3 | `reiniciar()` permite volver a jugar (`ganado()` y `terminado()` vuelven a false) | Sin esto el dominio bloquearía los nuevos intentos con `"terminado"` |
 
+Los UTs de dominio de `elegirPalabra` (AT10) ya cubren la selección determinista de la nueva palabra; no se duplican aquí.
+
 ### Refactor
-No hizo falta. `reiniciar()` limpia los dos `Set` y eso es suficiente — la
-palabra queda intacta porque es `readonly`, y toda la lógica se deriva de esos
-dos conjuntos.
+Se refactorizó la firma de `mountApp` de `(root, word: string)` a `(root, getWord: () => string)`.
+El handler de "Jugar de nuevo" ya no llama `game.reiniciar()` sino que crea un nuevo `Ahorcado(getWord())`.
+Esto desacopla la UI de la identidad de la instancia: "reiniciar" significa montar un juego nuevo, no mutar el existente.
+En `index.ts`, `getWord` es `() => wordParam` si hay `?word=` (determinista para los AT), o
+`() => elegirPalabra(PALABRAS, Math.random())` si no (aleatorio en producción).
+El seam del azar sigue siendo `elegirPalabra` — la misma solución del AT10, reutilizada.
 
 ---
 

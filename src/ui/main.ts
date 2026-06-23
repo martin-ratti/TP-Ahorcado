@@ -24,12 +24,16 @@ function dibujoAhorcado(partes: number): string {
   `;
 }
 
-export function mountApp(root: HTMLElement, word: string): void {
-  const game = new Ahorcado(word);
-  render(root, game, "");
+export function mountApp(root: HTMLElement, getWord: () => string): void {
+  iniciarPartida(root, getWord);
 }
 
-function render(root: HTMLElement, game: Ahorcado, mensaje: string): void {
+function iniciarPartida(root: HTMLElement, getWord: () => string): void {
+  const game = new Ahorcado(getWord());
+  render(root, game, getWord);
+}
+
+function render(root: HTMLElement, game: Ahorcado, getWord: () => string, mensaje = ""): void {
   const mensajeFin = game.ganado() ? "GANASTE" : game.perdido() ? "PERDISTE" : "";
 
   root.innerHTML = `
@@ -54,7 +58,7 @@ function render(root: HTMLElement, game: Ahorcado, mensaje: string): void {
     const aviso =
       resultado === "repetida" ? "Letra ya ingresada" :
       resultado === "invalida" ? "Entrada inválida" : "";
-    render(root, game, aviso);
+    render(root, game, getWord, aviso);
   };
 
   btnAdivinar.addEventListener("click", handleGuess);
@@ -65,8 +69,7 @@ function render(root: HTMLElement, game: Ahorcado, mensaje: string): void {
   const btnReiniciar = root.querySelector("button:last-of-type");
   if (btnReiniciar && btnReiniciar !== btnAdivinar) {
     btnReiniciar.addEventListener("click", () => {
-      game.reiniciar();
-      render(root, game, "");
+      iniciarPartida(root, getWord);
     });
   }
 }
