@@ -5,12 +5,12 @@ export class Ahorcado {
   private readonly vidasIniciales = 6;
 
   constructor(palabra: string) {
-    this.palabra = palabra.toUpperCase();
+    this.palabra = normalizar(palabra);
   }
 
   adivinar(letra: string): "acertada" | "fallada" | "repetida" | "terminado" | "invalida" {
-    const l = letra.toUpperCase();
-    if (!/^[A-Z]$/.test(l)) return "invalida";
+    const l = normalizar(letra);
+    if (!/^[A-ZÑ]$/.test(l)) return "invalida";
     if (this.terminado()) return "terminado";
     if (this.letrasAdivinadas.has(l) || this.letrasErradas.has(l)) return "repetida";
 
@@ -51,4 +51,15 @@ export class Ahorcado {
     this.letrasAdivinadas = new Set();
     this.letrasErradas = new Set();
   }
+}
+
+// Convierte a mayúsculas y quita diacríticos (á→A, é→E, etc.) preservando la Ñ.
+function normalizar(texto: string): string {
+  return texto
+    .toUpperCase()
+    .replace(/[ÁÀÂÄ]/g, "A")
+    .replace(/[ÉÈÊË]/g, "E")
+    .replace(/[ÍÌÎÏ]/g, "I")
+    .replace(/[ÓÒÔÖ]/g, "O")
+    .replace(/[ÚÙÛÜ]/g, "U");
 }

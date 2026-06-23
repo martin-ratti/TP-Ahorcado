@@ -4,7 +4,7 @@ Característica: Soporte de acentos y ñ
   Escenario: Adivinar con acento equivale a la letra sin acento
     Dado una partida con la palabra "MURCIELAGO"
     Cuando el jugador adivina la letra "é"
-    Entonces se ve la palabra "_ _ _ _ _ _ _ A _ _"
+    Entonces se ve la palabra "_ _ _ _ _ E _ _ _ _"
     Y se ven 6 vidas
 
   Escenario: La palabra con acento se normaliza al iniciar
@@ -15,5 +15,5 @@ Característica: Soporte de acentos y ñ
   Escenario: Adivinar la ñ funciona correctamente
     Dado una partida con la palabra "MAÑANA"
     Cuando el jugador adivina la letra "ñ"
-    Entonces se ve la palabra "_ A Ñ A _ A"
+    Entonces se ve la palabra "_ _ Ñ _ _ _"
     Y se ven 6 vidas

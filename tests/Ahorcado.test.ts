@@ -175,7 +175,7 @@ describe("Ahorcado - acentos y ñ", () => {
   it("adivinar con acento equivale a la letra sin acento", () => {
     const juego = new Ahorcado("MURCIELAGO");
     juego.adivinar("é");
-    expect(juego.palabraEnmascarada()).toBe("_ _ _ _ _ E _ A _ _");
+    expect(juego.palabraEnmascarada()).toBe("_ _ _ _ _ E _ _ _ _");
   });
 
   it("la palabra con acento se normaliza al construir", () => {
@@ -188,7 +188,7 @@ describe("Ahorcado - acentos y ñ", () => {
   it("la ñ se trata como letra independiente", () => {
     const juego = new Ahorcado("MAÑANA");
     juego.adivinar("ñ");
-    expect(juego.palabraEnmascarada()).toBe("_ A Ñ A _ A");
+    expect(juego.palabraEnmascarada()).toBe("_ _ Ñ _ _ _");
   });
 
   it("adivinar con acento no descuenta vidas", () => {
