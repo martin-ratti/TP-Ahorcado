@@ -3,6 +3,10 @@ import { createBdd } from "playwright-bdd";
 
 const { Given, When, Then } = createBdd();
 
+Given("que el jugador entra a la app con la palabra {string}", async ({ page }, palabra: string) => {
+  await page.goto(`/?word=${palabra}`);
+});
+
 Given("una partida con la palabra {string}", async ({ page }, palabra: string) => {
   await page.goto(`/?word=${palabra}`);
 });
@@ -13,8 +17,20 @@ When("el jugador adivina la letra {string}", async ({ page }, letra: string) => 
   await input.press("Enter");
 });
 
+When("el jugador inicia la partida", async ({ page }) => {
+  await page.getByRole("button", { name: "Jugar" }).click();
+});
+
 Then("se ve la palabra {string}", async ({ page }, esperada: string) => {
   await expect(page.getByTestId("word")).toHaveText(esperada);
+});
+
+Then("se ve la pantalla de inicio", async ({ page }) => {
+  await expect(page.getByTestId("start-screen")).toBeVisible();
+});
+
+Then("se ve el botón {string}", async ({ page }, nombre: string) => {
+  await expect(page.getByRole("button", { name: nombre })).toBeVisible();
 });
 
 Then("se ven {int} vidas", async ({ page }, vidas: number) => {
