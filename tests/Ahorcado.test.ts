@@ -143,3 +143,30 @@ describe("Ahorcado - entrada invalida", () => {
     expect(juego.vidas()).toBe(6);
   });
 });
+
+describe("Ahorcado - jugar de nuevo", () => {
+  it("reiniciar resetea las vidas a 6", () => {
+    const juego = new Ahorcado("OSO");
+    juego.adivinar("O");
+    juego.adivinar("S");
+    juego.reiniciar();
+    expect(juego.vidas()).toBe(6);
+  });
+
+  it("reiniciar resetea la palabra enmascarada", () => {
+    const juego = new Ahorcado("OSO");
+    juego.adivinar("O");
+    juego.adivinar("S");
+    juego.reiniciar();
+    expect(juego.palabraEnmascarada()).toBe("_ _ _");
+  });
+
+  it("reiniciar permite volver a jugar", () => {
+    const juego = new Ahorcado("OSO");
+    juego.adivinar("O");
+    juego.adivinar("S");
+    juego.reiniciar();
+    expect(juego.ganado()).toBe(false);
+    expect(juego.terminado()).toBe(false);
+  });
+});
