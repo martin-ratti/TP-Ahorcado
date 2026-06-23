@@ -8,97 +8,115 @@
 
 <hr>
 
-<h2 align="left">🎯 Propósito del Proyecto</h2>
-<p>
-  Este repositorio contiene el código fuente del tradicional <b>Juego del Ahorcado</b>, desarrollado como trabajo práctico para la cátedra de Metodologías de Desarrollo de Software. El objetivo principal es aplicar buenas prácticas de ingeniería de software, tipado estricto, testing e integración continua.
-</p>
+## 🎯 Propósito del Proyecto
+Este repositorio contiene el código fuente del tradicional **Juego del Ahorcado**, desarrollado como trabajo práctico para la cátedra de Metodologías de Desarrollo de Software. El objetivo principal es aplicar buenas prácticas de ingeniería de software, tipado estricto, desarrollo guiado por pruebas (TDD y ATDD) y separación de responsabilidades.
 
-<hr>
+---
 
-<h2 align="left">🛠️ Tecnologías y Herramientas</h2>
-<ul>
-  <li>🔵 <b>TypeScript:</b> Lenguaje principal del proyecto, asegurando un código robusto, escalable y libre de errores de tipado.</li>
-  <li>⚙️ <b>GitHub Actions:</b> Motor de Integración Continua (CI) para automatizar validaciones en cada cambio.</li>
-  <li>📦 <b>Node.js & pnpm:</b> Entorno de ejecución y gestor de paquetes.</li>
-</ul>
+## 🛠️ Tecnologías y Herramientas
+* 🔵 **TypeScript:** Lenguaje principal para garantizar un tipado estricto, robustez y legibilidad.
+* ⚡ **Vite:** Entorno de desarrollo rápido y servidor local.
+* 🧪 **Vitest:** Framework de testing unitario para la lógica del dominio (loop interno).
+* 🥒 **Playwright & playwright-bdd:** Herramientas para la automatización de Acceptance Tests en Gherkin/Cucumber sobre un navegador web real (loop externo).
+* ⚙️ **GitHub Actions:** Pipeline de Integración Continua (CI) que automatiza validaciones en cada cambio (tests, linting y build).
 
-<hr>
+---
 
-<h2 align="left">🚀 Características Principales</h2>
-<ul>
-  <li>🕹️ <b>Mecánica Clásica Integral:</b> Motor completo del tradicional juego del ahorcado, gestionando dinámicamente la selección de palabras, el flujo de vidas y las condiciones de resolución de la partida.</li>
-  <li>🧠 <b>Arquitectura Orientada a Pruebas:</b> Desarrollo fundamentado estrictamente en metodologías ágiles (<b>TDD</b> y <b>ATDD</b>), garantizando que la lógica interna esté validada desde su concepción y alineada con los criterios de aceptación del usuario.</li>
-  <li>⚡ <b>Gestión de Estado Ultra-Rápida:</b> Manejo de las sesiones de juego utilizando exclusivamente <b>memoria caché</b>. Esta decisión prescinde de bases de datos persistentes para priorizar la velocidad de ejecución y mantener la simplicidad del entorno académico.</li>
-  <li>🤖 <b>Integración Continua (CI) Robusta:</b> Pipelines automatizados configurados en GitHub Actions que actúan como guardianes del código, verificando el testing, el formateo y la compilación en cada cambio introducido.</li>
-</ul>
+## 📐 Arquitectura y Diseño (Separación de Capas)
+Siguiendo las pautas de diseño limpio del proyecto, la aplicación se divide estrictamente en dos responsabilidades:
+1. **Dominio (`src/domain/`)**: El objeto `Ahorcado` encapsula toda la lógica y las reglas del juego. No interactúa con el DOM, la interfaz gráfica ni funciones de I/O. Es 100% testeable en memoria de forma aislada.
+2. **UI (`src/ui/`)**: `main.ts` y `index.ts` actúan como capa de presentación. Escuchan los eventos del usuario, invocan los métodos del dominio y actualizan el DOM en base al estado del juego. No contienen lógica interna de juego.
 
-<hr>
+```
+Navegador ─▶ index.html ─▶ arranque (index.ts) ─▶ UI (main.ts) ─▶ Ahorcado (Dominio)
+                           lee ?word=             sin lógica      lógica pura, en memoria
+```
 
-<h2 align="left">🧪 Metodologías de Desarrollo (TDD & ATDD)</h2>
-<p>
-  Para garantizar la máxima calidad y fiabilidad del software, la construcción de este proyecto se rige bajo un enfoque centrado en el comportamiento y las pruebas, utilizando dos prácticas fundamentales de la agilidad:
-</p>
-<ul>
-  <li>🔴🟢🔵 <b>TDD (Test-Driven Development):</b> La arquitectura y la lógica interna del juego se desarrollaron escribiendo primero las pruebas unitarias y luego el código de producción necesario para superarlas. Esto nos permitió diseñar componentes altamente desacoplados, asegurar una cobertura de código robusta y validar de forma aislada los motores del juego (descuento de vidas, acierto de letras, condiciones de victoria).</li>
-  <li>🤝✅ <b>ATDD (Acceptance Test-Driven Development):</b> Más allá de las pruebas técnicas, trabajamos definiendo previamente los criterios de aceptación desde la perspectiva del usuario. Antes de implementar cada funcionalidad, establecimos qué comportamiento se esperaba exactamente al interactuar con el juego, asegurando que el desarrollo siempre estuviera alineado con los requisitos del negocio y la experiencia del jugador.</li>
-</ul>
+---
 
-<hr>
+## 🔄 Metodología: El Doble Loop (Double Loop TDD)
+El desarrollo se rigió bajo un enfoque estricto de doble ciclo de feedback:
+* **Loop Externo (ATDD - Cucumber/Gherkin):**
+  1. Se describe el comportamiento del usuario en lenguaje de negocio mediante escenarios `.feature`.
+  2. Se ejecuta la prueba automatizada contra el navegador real y se observa fallar (**ROJO honesto**).
+  3. Tras codificar la lógica y cablear la interfaz, se verifica el paso a **VERDE**.
+* **Loop Interno (TDD - Vitest):**
+  1. Antes de codificar para pasar el AT, se definen los Unit Tests sobre la lógica del dominio en `Ahorcado.ts`.
+  2. Cada test unitario pasa por el ciclo de **ROJO** ➔ **VERDE** ➔ **REFACTOR**.
+  3. Se registran los commits de manera ordenada para reflejar este proceso en el historial (`RED:` y `GREEN:`).
 
-<h2 align="left">💾 Gestión de Memoria y Almacenamiento</h2>
-<p>
-  Para el manejo del estado de las partidas y el progreso del juego, el sistema ha sido diseñado para operar exclusivamente con <b>memoria caché</b> (almacenamiento en memoria volátil), prescindiendo de una capa de persistencia de datos real (como bases de datos relacionales o NoSQL).
-</p>
-<p>
-  Esta decisión arquitectónica prioriza la extrema velocidad de acceso y la simplicidad del entorno de ejecución. Al enmarcarse en un entorno académico, nuestro enfoque principal es la correcta aplicación de metodologías de desarrollo, el diseño orientado a objetos y el testing exhaustivo, evitando la sobrecarga y complejidad que implica levantar, mantener y configurar infraestructura de bases de datos.
-</p>
+---
 
-<hr>
+## 🚀 Características y Escenarios de Aceptación (ATs)
+La aplicación cuenta con todos los escenarios base y 4 características avanzadas implementadas para el **Desafío de Aprobación Directa**:
 
-<h2 align="left">🔄 Integración Continua (CI)</h2>
-<p>
-  Gracias a <b>GitHub Actions</b>, hemos establecido flujos de trabajo que se disparan en cada <i>Push</i> o <i>Pull Request</i> a las ramas principales:
-</p>
-<ul>
-  <li>🧪 <b>Testing Automatizado:</b> Ejecución de pruebas unitarias para validar la lógica del juego.</li>
-  <li>🧹 <b>Linter y Formateo:</b> Revisión estática del código TypeScript para mantener un estilo unificado en el equipo.</li>
-  <li>🏗️ <b>Build Check:</b> Verificación de que el proyecto compile correctamente sin errores.</li>
-</ul>
+### Escenarios Base (AT1 - AT7)
+* **AT1 — Iniciar partida:** El juego comienza enmascarando la palabra con guiones bajos separados por espacios (ej: `GATO` ➔ `_ _ _ _`) y con 6 vidas disponibles.
+* **AT2 — Acertar letra:** Adivinar una letra correcta revela todas sus posiciones (ej: `ALA` + `A` ➔ `A _ A`) sin penalizar vidas.
+* **AT3 — Fallar letra:** Adivinar una letra incorrecta descuenta exactamente una vida y mantiene oculta la palabra.
+* **AT4 — Ganar:** Descubrir la palabra completa muestra un mensaje de victoria ("GANASTE").
+* **AT5 — Perder:** Agotar las 6 vidas muestra el mensaje de derrota ("PERDISTE") y revela la palabra oculta completa.
+* **AT6 — Letra repetida:** Ingresar una letra que ya fue intentada (sea acierto o fallo) muestra un mensaje de advertencia y no penaliza vidas.
+* **AT7 — Entrada inválida:** Tipear números, símbolos o intentar jugar con la partida ya finalizada devuelve un estado controlado y no descuenta vidas.
 
-<hr>
+### Desafío Aprobación Directa (AT8 - AT11)
+* **AT8 — Jugar de nuevo:** Permite al usuario reiniciar la partida en caliente sin necesidad de recargar la página completa en el navegador.
+* **AT9 — Soporte de acentos y Ñ:**
+  * Normaliza diacríticos para que letras con tilde (ej: `á`, `é`) actúen de forma equivalente a sus vocales normales, mejorando la usabilidad.
+  * Preserva y valida la `Ñ` como una letra independiente del español.
+* **AT10 — Palabra al azar:** Si no se provee una palabra en la URL (`?word=`), el juego elige una aleatoriamente de una lista interna de palabras. Se diseñó un *seam* para pasar el índice en los tests de manera determinista, aislando el azar del dominio.
+* **AT11 — Dibujo progresivo del ahorcado:** Renderizado dinámico de un SVG interactivo en la pantalla que dibuja parte a parte el muñeco (cabeza, torso, extremidades) con cada fallo.
 
-<h2 align="left">💻 Instrucciones de Instalación</h2>
-<ol>
-  <li>Clonar el repositorio en tu máquina local:<br>
-    <code>git clone https://github.com/agussantinelli/ahorcado.git</code>
-  </li>
-  <li>Navegar al directorio del proyecto:<br>
-    <code>cd ahorcado</code>
-  </li>
-  <li>Instalar las dependencias necesarias:<br>
-    <code>pnpm install</code>
-  </li>
-  <li>Compilar y ejecutar el juego:<br>
-    <code>pnpm start</code> <i>(o el script definido por el equipo)</i>
-  </li>
-</ol>
+---
 
-<hr>
+## 💾 Gestión de Memoria y Almacenamiento
+Para el manejo del estado de las partidas y el progreso del juego, el sistema ha sido diseñado para operar exclusivamente con **memoria caché** (almacenamiento en memoria volátil), prescindiendo de una capa de persistencia de datos real (como bases de datos relacionales o NoSQL).
 
-<h2>🤝 El Equipo Detrás del Código</h2>
-<p>
-  <i>Este proyecto cobra vida gracias al esfuerzo conjunto, la pasión por el desarrollo y el trabajo colaborativo de:</i>
-</p>
+Esta decisión arquitectónica prioriza la extrema velocidad de acceso y la simplicidad del entorno de ejecución académico, enfocándose en el diseño orientado a objetos y la cobertura de pruebas.
 
-<ul>
-  <li>💻 <b>Agustín Santinelli</b></li>
-  <li>✨ <b>Irina Repupilli</b></li>
-  <li>🚀 <b>Francisco Lovatti</b></li>
-  <li>🛠️ <b>Martin Ratti</b></li>
-</ul>
+---
+
+## 💻 Instrucciones de Instalación y Ejecución
+
+### 1. Instalar dependencias
+Asegúrate de clonar el repositorio e instalar las dependencias necesarias:
+```bash
+git clone https://github.com/martin-ratti/TP-Ahorcado
+cd ahorcado
+npm install
+```
+
+### 2. Ejecutar entorno de desarrollo (Local)
+Para levantar el servidor de Vite y jugar:
+```bash
+npm run dev
+```
+Accede a `http://localhost:5173` en el navegador. Para iniciar el juego con una palabra específica: `http://localhost:5173/?word=GATO`.
+
+### 3. Ejecutar Pruebas Unitarias (TDD)
+Para correr la suite de Vitest de la lógica de dominio:
+```bash
+npm run test
+```
+
+### 4. Ejecutar Pruebas de Aceptación (ATDD)
+Para correr los tests en Gherkin/Cucumber sobre un navegador headless con Playwright:
+```bash
+npm run at
+```
+
+---
+
+## 🤝 El Equipo Detrás del Código
+*Este proyecto cobra vida gracias al esfuerzo conjunto y colaborativo de:*
+
+* 💻 **Agustín Santinelli**
+* ✨ **Irina Repupilli**
+* 🚀 **Francisco Lovatti**
+* 🛠️ **Martin Ratti**
 
 <hr>
 
 <div align="center">
-  <p><i>Desarrollado con 🧉 y código estructurado por el equipo de alumnos.</i></p>
+  <p><i>Desarrollado con 🧉 y metodologías ágiles por el equipo de alumnos.</i></p>
 </div>
