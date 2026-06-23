@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { Ahorcado } from "../src/domain/Ahorcado";
+import { elegirPalabra, PALABRAS } from "../src/domain/palabras";
 
 describe("Ahorcado - iniciar partida", () => {
   it("muestra guiones para todas las letras al iniciar", () => {
@@ -195,5 +196,21 @@ describe("Ahorcado - acentos y ñ", () => {
     const juego = new Ahorcado("MURCIELAGO");
     juego.adivinar("é");
     expect(juego.vidas()).toBe(6);
+  });
+});
+
+describe("palabra al azar - seam elegirPalabra", () => {
+  it("elegirPalabra devuelve la palabra en el indice dado", () => {
+    const lista = ["GATO", "PERRO", "OSO"];
+    expect(elegirPalabra(lista, 0)).toBe("GATO");
+    expect(elegirPalabra(lista, 2)).toBe("OSO");
+  });
+
+  it("PALABRAS tiene al menos una palabra", () => {
+    expect(PALABRAS.length).toBeGreaterThan(0);
+  });
+
+  it("todas las palabras de PALABRAS son strings no vacios", () => {
+    expect(PALABRAS.every((p) => typeof p === "string" && p.length > 0)).toBe(true);
   });
 });
