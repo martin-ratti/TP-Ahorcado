@@ -6,7 +6,7 @@ export function mountApp(root: HTMLElement, word: string): void {
 }
 
 function render(root: HTMLElement, game: Ahorcado): void {
-  const mensaje = game.ganado() ? "GANASTE" : "";
+  const mensaje = game.ganado() ? "GANASTE" : game.perdido() ? "PERDISTE" : "";
 
   root.innerHTML = `
     <h1>Ahorcado</h1>

@@ -21,6 +21,7 @@ export class Ahorcado {
   }
 
   palabraEnmascarada(): string {
+    if (this.perdido()) return this.palabra;
     return this.palabra
       .split("")
       .map((c) => (this.letrasAdivinadas.has(c) ? c : "_"))
