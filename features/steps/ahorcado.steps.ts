@@ -33,6 +33,11 @@ Given("que el jugador entra sin especificar palabra", async ({ page }) => {
   await page.goto("/");
 });
 
+Then("se ven {int} partes del muñeco", async ({ page }, partes: number) => {
+  const elementos = await page.getByTestId("hangman-part").count();
+  expect(elementos).toBe(partes);
+});
+
 Then("la palabra tiene al menos una letra", async ({ page }) => {
   const texto = await page.getByTestId("word").innerText();
   expect(texto.trim().length).toBeGreaterThan(0);
