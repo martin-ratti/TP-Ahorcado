@@ -121,3 +121,25 @@ describe("Ahorcado - letra repetida", () => {
     expect(juego.adivinar("E")).toBe("fallada");
   });
 });
+
+describe("Ahorcado - entrada invalida", () => {
+  it("adivinar un numero devuelve 'invalida' y no descuenta vidas", () => {
+    const juego = new Ahorcado("GATO");
+    expect(juego.adivinar("3")).toBe("invalida");
+    expect(juego.vidas()).toBe(6);
+  });
+
+  it("adivinar un simbolo devuelve 'invalida' y no descuenta vidas", () => {
+    const juego = new Ahorcado("GATO");
+    expect(juego.adivinar("!")).toBe("invalida");
+    expect(juego.vidas()).toBe(6);
+  });
+
+  it("adivinar con partida terminada devuelve 'terminado' y no cambia el estado", () => {
+    const juego = new Ahorcado("OSO");
+    juego.adivinar("O");
+    juego.adivinar("S");
+    expect(juego.adivinar("Z")).toBe("terminado");
+    expect(juego.vidas()).toBe(6);
+  });
+});
