@@ -36,7 +36,7 @@ function render(root: HTMLElement, game: Ahorcado, mensaje: string): void {
     <h1>Ahorcado</h1>
     ${dibujoAhorcado(game.partesDelMuñeco())}
     <p data-testid="word">${game.palabraEnmascarada()}</p>
-    <p data-testid="lives">Vidas: ${game.vidas()}</p>
+    <p data-testid="lives">${game.vidas()}</p>
     <p data-testid="message">${mensajeFin || mensaje}</p>
     <input type="text" maxlength="1" placeholder="Letra" />
     <button>Adivinar</button>
