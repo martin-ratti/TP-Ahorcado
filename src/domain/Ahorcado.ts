@@ -8,8 +8,9 @@ export class Ahorcado {
     this.palabra = palabra.toUpperCase();
   }
 
-  adivinar(letra: string): "acertada" | "fallada" | "repetida" | "terminado" {
+  adivinar(letra: string): "acertada" | "fallada" | "repetida" | "terminado" | "invalida" {
     const l = letra.toUpperCase();
+    if (!/^[A-Z]$/.test(l)) return "invalida";
     if (this.terminado()) return "terminado";
     if (this.letrasAdivinadas.has(l) || this.letrasErradas.has(l)) return "repetida";
 

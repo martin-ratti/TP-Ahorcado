@@ -25,7 +25,9 @@ function render(root: HTMLElement, game: Ahorcado, mensaje: string): void {
     if (!letra) return;
     const resultado = game.adivinar(letra);
     input.value = "";
-    const aviso = resultado === "repetida" ? "Letra ya ingresada" : "";
+    const aviso =
+      resultado === "repetida" ? "Letra ya ingresada" :
+      resultado === "invalida" ? "Entrada inválida" : "";
     render(root, game, aviso);
   };
 
