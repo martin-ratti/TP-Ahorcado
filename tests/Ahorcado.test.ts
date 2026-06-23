@@ -214,3 +214,30 @@ describe("palabra al azar - seam elegirPalabra", () => {
     expect(PALABRAS.every((p) => typeof p === "string" && p.length > 0)).toBe(true);
   });
 });
+
+describe("Ahorcado - dibujo progresivo", () => {
+  it("con 0 errores hay 0 partes del muñeco", () => {
+    const juego = new Ahorcado("GATO");
+    expect(juego.partesDelMuñeco()).toBe(0);
+  });
+
+  it("con 1 error hay 1 parte del muñeco", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("E");
+    expect(juego.partesDelMuñeco()).toBe(1);
+  });
+
+  it("con 3 errores hay 3 partes del muñeco", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("E");
+    juego.adivinar("I");
+    juego.adivinar("U");
+    expect(juego.partesDelMuñeco()).toBe(3);
+  });
+
+  it("con 6 errores hay 6 partes del muñeco", () => {
+    const juego = new Ahorcado("OSO");
+    ["A", "B", "C", "D", "E", "F"].forEach((l) => juego.adivinar(l));
+    expect(juego.partesDelMuñeco()).toBe(6);
+  });
+});
