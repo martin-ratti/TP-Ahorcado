@@ -6,10 +6,13 @@ export function mountApp(root: HTMLElement, word: string): void {
 }
 
 function render(root: HTMLElement, game: Ahorcado): void {
+  const mensaje = game.ganado() ? "GANASTE" : "";
+
   root.innerHTML = `
     <h1>Ahorcado</h1>
     <p data-testid="word">${game.palabraEnmascarada()}</p>
     <p data-testid="lives">${game.vidas()}</p>
+    <p data-testid="message">${mensaje}</p>
     <input type="text" maxlength="1" placeholder="Letra" />
     <button>Adivinar</button>
   `;
