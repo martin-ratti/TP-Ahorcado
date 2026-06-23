@@ -89,3 +89,35 @@ describe("Ahorcado - perder", () => {
     expect(juego.palabraEnmascarada()).toBe("OSO");
   });
 });
+
+describe("Ahorcado - letra repetida", () => {
+  it("repetir letra acertada no descuenta vidas", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("A");
+    juego.adivinar("A");
+    expect(juego.vidas()).toBe(6);
+  });
+
+  it("repetir letra fallada no descuenta vidas adicionales", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("E");
+    juego.adivinar("E");
+    expect(juego.vidas()).toBe(5);
+  });
+
+  it("adivinar letra repetida devuelve 'repetida'", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("A");
+    expect(juego.adivinar("A")).toBe("repetida");
+  });
+
+  it("adivinar letra nueva acertada devuelve 'acertada'", () => {
+    const juego = new Ahorcado("GATO");
+    expect(juego.adivinar("A")).toBe("acertada");
+  });
+
+  it("adivinar letra nueva fallada devuelve 'fallada'", () => {
+    const juego = new Ahorcado("GATO");
+    expect(juego.adivinar("E")).toBe("fallada");
+  });
+});
