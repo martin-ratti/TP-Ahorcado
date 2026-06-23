@@ -39,4 +39,18 @@ describe("Ahorcado - fallar letra", () => {
     juego.adivinar("E");
     expect(juego.vidas()).toBe(5);
   });
+
+  it("fallar una letra no revela ninguna posicion", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("E");
+    expect(juego.palabraEnmascarada()).toBe("_ _ _ _");
+  });
+
+  it("varios fallos acumulan errores correctamente", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("E");
+    juego.adivinar("I");
+    juego.adivinar("U");
+    expect(juego.vidas()).toBe(3);
+  });
 });
