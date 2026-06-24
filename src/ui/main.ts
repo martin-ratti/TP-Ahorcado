@@ -43,7 +43,19 @@ function letrasUsadas(game: Ahorcado): string {
 }
 
 export function mountApp(root: HTMLElement, getWord: () => string): void {
-  iniciarPartida(root, getWord);
+  mostrarPantallaInicio(root, getWord);
+}
+
+function mostrarPantallaInicio(root: HTMLElement, getWord: () => string): void {
+  root.innerHTML = `
+    <section data-testid="start-screen">
+      <h1>Ahorcado</h1>
+      <button>Jugar</button>
+    </section>
+  `;
+
+  const btnJugar = root.querySelector("button")!;
+  btnJugar.addEventListener("click", () => iniciarPartida(root, getWord));
 }
 
 function iniciarPartida(root: HTMLElement, getWord: () => string): void {
@@ -56,20 +68,22 @@ function render(root: HTMLElement, game: Ahorcado, getWord: () => string, mensaj
   const vidas = game.vidas();
 
   root.innerHTML = `
-    <h1>Ahorcado</h1>
-    ${dibujoAhorcado(game.partesDelMuñeco())}
-    <p data-testid="word">${game.palabraEnmascarada()}</p>
-    <div class="lives-row">
-      <div class="hearts">${corazones(vidas)}</div>
-    </div>
-    <span data-testid="lives" style="display:none">${vidas}</span>
-    <p data-testid="message">${mensajeFin || mensaje}</p>
-    ${letrasUsadas(game)}
-    <div class="input-row">
-      <input type="text" maxlength="1" placeholder="A" autocomplete="off" />
-      <button>Adivinar</button>
-    </div>
-    ${game.terminado() ? '<button class="secondary">Jugar de nuevo</button>' : ""}
+    <section class="game-screen">
+      <h1>Ahorcado</h1>
+      ${dibujoAhorcado(game.partesDelMuñeco())}
+      <p data-testid="word">${game.palabraEnmascarada()}</p>
+      <div class="lives-row">
+        <div class="hearts">${corazones(vidas)}</div>
+      </div>
+      <span data-testid="lives" style="display:none">${vidas}</span>
+      <p data-testid="message">${mensajeFin || mensaje}</p>
+      ${letrasUsadas(game)}
+      <div class="input-row">
+        <input type="text" maxlength="1" placeholder="A" autocomplete="off" />
+        <button>Adivinar</button>
+      </div>
+      ${game.terminado() ? '<button class="secondary">Jugar de nuevo</button>' : ""}
+    </section>
   `;
 
   const input       = root.querySelector("input")!;
