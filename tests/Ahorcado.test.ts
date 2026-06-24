@@ -241,3 +241,22 @@ describe("Ahorcado - dibujo progresivo", () => {
     expect(juego.partesDelMuñeco()).toBe(6);
   });
 });
+
+describe("Ahorcado - dificultad", () => {
+  it("por defecto empieza con 6 vidas si no se especifica", () => {
+    const juego = new Ahorcado("GATO");
+    expect(juego.vidas()).toBe(6);
+  });
+
+  it("permite configurar la cantidad de vidas iniciales", () => {
+    const juego = new Ahorcado("GATO", 4);
+    expect(juego.vidas()).toBe(4);
+  });
+
+  it("reiniciar respeta la cantidad de vidas configurada, no siempre 6", () => {
+    const juego = new Ahorcado("GATO", 2);
+    juego.adivinar("E");
+    juego.reiniciar();
+    expect(juego.vidas()).toBe(2);
+  });
+});
