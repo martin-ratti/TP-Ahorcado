@@ -11,14 +11,18 @@ Given("una partida con la palabra {string}", async ({ page }, palabra: string) =
   await page.goto(`/?word=${palabra}`);
 });
 
-When("el jugador adivina la letra {string}", async ({ page }, letra: string) => {
-  const input = page.getByRole("textbox");
-  await input.fill(letra);
-  await input.press("Enter");
+When("el jugador elige la dificultad {string}", async ({ page }, nivel: string) => {
+  await page.getByRole("radio", { name: nivel }).check();
 });
 
 When("el jugador inicia la partida", async ({ page }) => {
   await page.getByRole("button", { name: "Jugar" }).click();
+});
+
+When("el jugador adivina la letra {string}", async ({ page }, letra: string) => {
+  const input = page.getByRole("textbox");
+  await input.fill(letra);
+  await input.press("Enter");
 });
 
 Then("se ve la palabra {string}", async ({ page }, esperada: string) => {
