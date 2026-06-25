@@ -96,15 +96,31 @@ function mostrarPantallaInicio(
   });
 
   const btnJugar = root.querySelector("button")!;
-  btnJugar.addEventListener("click", () => iniciarPartida(root, getWord, getDificultad()));
+  btnJugar.addEventListener("click", () =>
+    iniciarPartida(root, getWord, getDificultad(), setDificultad, getDificultad)
+  );
 }
 
-function iniciarPartida(root: HTMLElement, getWord: () => string, dificultad: string): void {
+function iniciarPartida(
+  root: HTMLElement,
+  getWord: () => string,
+  dificultad: string,
+  setDificultad: (nivel: string) => void,
+  getDificultad: () => string,
+): void {
   const game = new Ahorcado(getWord(), vidasSegunDificultad(dificultad));
-  render(root, game, getWord, dificultad);
+  render(root, game, getWord, dificultad, setDificultad, getDificultad);
 }
 
-function render(root: HTMLElement, game: Ahorcado, getWord: () => string, dificultad: string, mensaje = ""): void {
+function render(
+  root: HTMLElement,
+  game: Ahorcado,
+  getWord: () => string,
+  dificultad: string,
+  setDificultad: (nivel: string) => void,
+  getDificultad: () => string,
+  mensaje = "",
+): void {
   const mensajeFin = game.ganado() ? "GANASTE" : game.perdido() ? "PERDISTE" : "";
   const vidas = game.vidas();
 
@@ -124,6 +140,7 @@ function render(root: HTMLElement, game: Ahorcado, getWord: () => string, dificu
         <button>Adivinar</button>
       </div>
       ${game.terminado() ? '<button class="secondary">Jugar de nuevo</button>' : ""}
+      <button class="back-to-menu">Volver al menú</button>
     </section>
   `;
 
@@ -139,7 +156,7 @@ function render(root: HTMLElement, game: Ahorcado, getWord: () => string, dificu
     const aviso =
       resultado === "repetida" ? "Letra ya ingresada" :
       resultado === "invalida" ? "Entrada inválida"   : "";
-    render(root, game, getWord, dificultad, aviso);
+    render(root, game, getWord, dificultad, setDificultad, getDificultad, aviso);
   };
 
   btnAdivinar.addEventListener("click", handleGuess);
@@ -147,6 +164,13 @@ function render(root: HTMLElement, game: Ahorcado, getWord: () => string, dificu
 
   const btnReiniciar = root.querySelector("button.secondary");
   if (btnReiniciar) {
-    btnReiniciar.addEventListener("click", () => iniciarPartida(root, getWord, dificultad));
+    btnReiniciar.addEventListener("click", () =>
+      iniciarPartida(root, getWord, dificultad, setDificultad, getDificultad)
+    );
   }
+
+  const btnVolver = root.querySelector("button.back-to-menu")!;
+  btnVolver.addEventListener("click", () =>
+    mostrarPantallaInicio(root, getWord, setDificultad, getDificultad)
+  );
 }
