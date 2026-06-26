@@ -273,3 +273,22 @@ describe("Ahorcado - dificultad", () => {
     expect(vidasSegunDificultad("dificil")).toBe(2);
   });
 });
+
+describe("Ahorcado - estadoLetra (teclado en pantalla)", () => {
+  it("estadoLetra devuelve 'disponible' si la letra no fue jugada", () => {
+    const juego = new Ahorcado("GATO");
+    expect(juego.estadoLetra("A")).toBe("disponible");
+  });
+
+  it("estadoLetra devuelve 'acertada' si la letra es un acierto", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("A");
+    expect(juego.estadoLetra("A")).toBe("acertada");
+  });
+
+  it("estadoLetra devuelve 'fallada' si la letra es un fallo", () => {
+    const juego = new Ahorcado("GATO");
+    juego.adivinar("E");
+    expect(juego.estadoLetra("E")).toBe("fallada");
+  });
+});

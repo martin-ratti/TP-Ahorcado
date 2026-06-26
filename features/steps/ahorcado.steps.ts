@@ -64,3 +64,11 @@ Then("la palabra tiene al menos una letra", async ({ page }) => {
   const texto = await page.getByTestId("word").innerText();
   expect(texto.trim().length).toBeGreaterThan(0);
 });
+
+Then("la tecla {string} está deshabilitada", async ({ page }, tecla: string) => {
+  await expect(page.getByRole("button", { name: tecla, exact: true })).toBeDisabled();
+});
+
+Then("la tecla {string} está habilitada", async ({ page }, tecla: string) => {
+  await expect(page.getByRole("button", { name: tecla, exact: true })).toBeEnabled();
+});
