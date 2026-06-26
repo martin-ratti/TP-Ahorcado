@@ -57,6 +57,11 @@
         filter: drop-shadow(0 0 8px rgba(233, 69, 96, 0.4));
       }
 
+      @keyframes draw {
+        from { stroke-dasharray: 100; stroke-dashoffset: 100; }
+        to { stroke-dashoffset: 0; }
+      }
+
       /* ── palabra ── */
       [data-testid="word"] {
         font-size: 2rem;

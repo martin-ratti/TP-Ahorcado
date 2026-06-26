@@ -18,7 +18,12 @@ function partesAMostrar(errores: number, vidasIniciales: number): number {
 }
 
 function dibujoAhorcado(partes: number): string {
-  const cuerpo = SVG_PARTES.slice(0, partes).join("\n");
+  const cuerpo = SVG_PARTES.slice(0, partes).map((part, index) => {
+    if (index === partes - 1) {
+      return part.replace('/>', ' style="animation: draw 0.4s ease-out forwards;" />');
+    }
+    return part;
+  }).join("\n");
   return `
     <div class="gallows">
       <svg width="160" height="200">
