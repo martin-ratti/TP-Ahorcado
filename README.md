@@ -59,13 +59,16 @@ La aplicación cuenta con todos los escenarios base y 4 características avanzad
 * **AT6 — Letra repetida:** Ingresar una letra que ya fue intentada (sea acierto o fallo) muestra un mensaje de advertencia y no penaliza vidas.
 * **AT7 — Entrada inválida:** Tipear números, símbolos o intentar jugar con la partida ya finalizada devuelve un estado controlado y no descuenta vidas.
 
-### Desafío Aprobación Directa (AT8 - AT11)
+### Desafío Aprobación Directa (AT8 - AT14)
 * **AT8 — Jugar de nuevo:** Permite al usuario reiniciar la partida en caliente sin necesidad de recargar la página completa en el navegador.
 * **AT9 — Soporte de acentos y Ñ:**
   * Normaliza diacríticos para que letras con tilde (ej: `á`, `é`) actúen de forma equivalente a sus vocales normales, mejorando la usabilidad.
   * Preserva y valida la `Ñ` como una letra independiente del español.
 * **AT10 — Palabra al azar:** Si no se provee una palabra en la URL (`?word=`), el juego elige una aleatoriamente de una lista interna de palabras. Se diseñó un *seam* para pasar el índice en los tests de manera determinista, aislando el azar del dominio.
 * **AT11 — Dibujo progresivo del ahorcado:** Renderizado dinámico de un SVG interactivo en la pantalla que dibuja parte a parte el muñeco (cabeza, torso, extremidades) con cada fallo.
+* **AT12 — Pantalla de inicio:** Incorpora un menú inicial que da la bienvenida al usuario y permite arrancar el juego bajo demanda.
+* **AT13 — Dificultad de partida:** Permite seleccionar entre distintos niveles de dificultad (Fácil, Normal, Difícil), que ajustan dinámicamente la cantidad de vidas iniciales (6, 4, 2 respectivamente).
+* **AT14 — Volver al menú:** Implementa la opción de abandonar o terminar una partida y regresar a la pantalla de inicio sin perder el contexto de la aplicación.
 
 ---
 

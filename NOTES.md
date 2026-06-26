@@ -237,6 +237,48 @@ una dice cuántas vidas quedan, la otra cuántas partes se dibujan.
 
 ---
 
+## AT12 — Pantalla de inicio
+
+> El usuario entra a la app y ve un menú inicial para arrancar a jugar.
+
+### UTs del objeto `Ahorcado`
+
+Este AT concierne principalmente a la UI y el estado general de la app (menú vs juego). No requirió tests adicionales sobre la lógica de `Ahorcado`, ya que el objeto en sí solo representa una partida en curso.
+
+### Refactor
+Se refactorizó el estado en la interfaz para poder alternar entre una vista de menú y una de juego, sin alterar el dominio.
+
+---
+
+## AT13 — Dificultad de partida
+
+> El usuario elige la dificultad (Fácil, Normal, Difícil) lo que determina las vidas (6, 4, 2).
+
+### UTs del objeto dominio (`dificultad.ts` y `Ahorcado`)
+
+| # | Descripción | Por qué existe |
+|---|---|---|
+| 1 | `Ahorcado` acepta vidas iniciales configurables en su constructor | La dificultad elegida debe afectar el juego inyectándole un límite de vidas |
+| 2 | `vidasSegunDificultad` mapea las opciones a 6, 4 y 2 respectivamente | Permite aislar la configuración de balance del juego fuera de la interfaz |
+
+### Refactor
+Se extrajo el parámetro `vidasIniciales` al constructor de `Ahorcado`, que antes era fijo en 6. Se agregó `dificultad.ts` para agrupar los mapeos sin cargar la UI de lógica de juego. La inyección de dependencia permite testear más fácil.
+
+---
+
+## AT14 — Volver al menú
+
+> El usuario vuelve a la pantalla inicial en medio del juego o al terminar.
+
+### UTs del objeto `Ahorcado`
+
+Este AT no suma lógica nueva al objeto `Ahorcado`. Es una transición en el router/UI que descarta el objeto actual y vuelve a montar el menú.
+
+### Refactor
+Se manejó desde `main.ts` limpiando la pantalla y cambiando el estado de la vista.
+
+---
+
 ## Por qué el AT corre contra la app real
 
 Un test de componente en jsdom puede dar verde aunque la app real no arranque:
