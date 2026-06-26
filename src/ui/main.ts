@@ -181,20 +181,20 @@ function render(
   
   const pistaHTML = pista
     ? pistaMostrada
-      ? `<p data-testid="hint" style="color: #4ecca3; font-style: italic; margin-bottom: -15px;">Pista: ${pista}</p>`
-      : `<button class="hint-btn" style="background:none; border:none; font-size:1.5rem; cursor:pointer; margin-bottom: -15px;" title="Ver pista">🪄</button>`
+      ? `<p data-testid="hint" style="color: #ffd700; font-weight: bold; margin-top: 10px;">Pista: ${pista}</p>`
+      : `<button class="hint-btn" title="Ver pista">🪄 Pista</button>`
     : "";
 
   root.innerHTML = `
     <section class="game-screen">
       <h1>Ahorcado</h1>
       ${dibujoAhorcado(partesAMostrar(game.partesDelMuñeco(), vidasSegunDificultad(dificultad)))}
-      ${pistaHTML}
       <p data-testid="word">${game.palabraEnmascarada()}</p>
       <div class="lives-row">
         <div class="hearts">${corazones(vidas)}</div>
       </div>
       <span data-testid="lives" style="display:none">${vidas}</span>
+      ${pistaHTML}
       ${normalMessageHTML}
       ${tecladoHTML(game)}
       ${!game.terminado() ? '<button class="back-to-menu" style="margin-top: 15px">Volver al menú</button>' : ""}
