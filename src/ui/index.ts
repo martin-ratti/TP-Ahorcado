@@ -1,11 +1,15 @@
 import { mountApp } from "./main";
-import { elegirPalabra, PALABRAS } from "../domain/palabras";
+import { elegirPalabra, PALABRAS, PalabraConPista } from "../domain/palabras";
 
 const params = new URLSearchParams(window.location.search);
 const wordParam = params.get("word");
+const hintParam = params.get("hint");
 
-const getWord = wordParam
-  ? () => wordParam
-  : () => elegirPalabra(PALABRAS, Math.floor(Math.random() * PALABRAS.length));
+const getWordData = (): PalabraConPista => {
+  if (wordParam) {
+    return { palabra: wordParam, pista: hintParam || "" };
+  }
+  return elegirPalabra(PALABRAS, Math.floor(Math.random() * PALABRAS.length));
+};
 
-mountApp(document.getElementById("app")!, getWord);
+mountApp(document.getElementById("app")!, getWordData);
