@@ -146,6 +146,18 @@ function render(
   const mensajeFin = game.ganado() ? "GANASTE" : game.perdido() ? "PERDISTE" : "";
   const vidas = game.vidas();
 
+  const modalHTML = game.terminado() ? `
+    <div class="modal-overlay">
+      <div class="modal-content ${game.ganado() ? 'neon-green' : 'neon-red'}">
+        <h2 data-testid="message">${mensajeFin}</h2>
+        <button class="secondary btn-modal restart-btn">Jugar de nuevo</button>
+        <button class="back-to-menu btn-modal">Volver al menú</button>
+      </div>
+    </div>
+  ` : "";
+
+  const normalMessageHTML = !game.terminado() ? `<p data-testid="message">${mensaje}</p>` : "";
+
   root.innerHTML = `
     <section class="game-screen">
       <h1>Ahorcado</h1>
@@ -155,15 +167,15 @@ function render(
         <div class="hearts">${corazones(vidas)}</div>
       </div>
       <span data-testid="lives" style="display:none">${vidas}</span>
-      <p data-testid="message">${mensajeFin || mensaje}</p>
+      ${normalMessageHTML}
       ${letrasUsadas(game)}
       <div class="input-row">
         <input type="text" maxlength="1" placeholder="A" autocomplete="off" />
         <button>Adivinar</button>
       </div>
-      ${game.terminado() ? '<button class="secondary">Jugar de nuevo</button>' : ""}
-      <button class="back-to-menu">Volver al menú</button>
+      ${!game.terminado() ? '<button class="back-to-menu">Volver al menú</button>' : ""}
     </section>
+    ${modalHTML}
   `;
 
   const input = root.querySelector("input")!;
