@@ -7,6 +7,10 @@ Given("que el jugador entra a la app con la palabra {string}", async ({ page }, 
   await page.goto(`/?word=${palabra}`);
 });
 
+Given("que el jugador entra a la app con la palabra {string} y pista {string}", async ({ page }, palabra: string, pista: string) => {
+  await page.goto(`/?word=${palabra}&hint=${pista}`);
+});
+
 Given("una partida con la palabra {string}", async ({ page }, palabra: string) => {
   await page.goto(`/?word=${palabra}`);
   await page.getByRole("button", { name: "Jugar" }).click();
