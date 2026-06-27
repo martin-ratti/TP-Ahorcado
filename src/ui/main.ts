@@ -180,6 +180,7 @@ function mostrarPantallaInicio(
       getDificultad(),
       setDificultad,
       getDificultad,
+      sessionStats,
     ),
   );
 
@@ -241,6 +242,7 @@ function mostrarPantallaDosJugadores(
       getDificultad(),
       setDificultad,
       getDificultad,
+      sessionStats,
     );
   });
 
@@ -273,7 +275,15 @@ function iniciarPartida(
     data.pista,
     sessionStats,
   );
-  render(root, game, getWordData, dificultad, setDificultad, getDificultad);
+  render(
+    root,
+    game,
+    getWordData,
+    dificultad,
+    setDificultad,
+    getDificultad,
+    sessionStats,
+  );
 }
 
 function render(
@@ -283,6 +293,7 @@ function render(
   dificultad: string,
   setDificultad: (nivel: string) => void,
   getDificultad: () => string,
+  sessionStats: { victorias: number; derrotas: number },
   mensaje = '',
   pistaMostrada = false,
 ): void {
@@ -356,6 +367,7 @@ function render(
       dificultad,
       setDificultad,
       getDificultad,
+      sessionStats,
       mensajeSegunResultado(resultado),
       pistaMostrada,
     );
@@ -372,6 +384,7 @@ function render(
         dificultad,
         setDificultad,
         getDificultad,
+        sessionStats,
         `Pista: ${pista}`,
         true,
       );
@@ -392,6 +405,7 @@ function render(
         dificultad,
         setDificultad,
         getDificultad,
+        sessionStats,
         siguienteMensaje,
         pistaMostrada,
       );
@@ -410,6 +424,7 @@ function render(
         dificultad,
         setDificultad,
         getDificultad,
+        sessionStats,
         mensajeSegunResultado(resultado),
         pistaMostrada,
       );
@@ -418,7 +433,7 @@ function render(
 
   window.onkeydown = handleKeydown;
 
-  const btnReiniciar = root.querySelector('button.secondary');
+  const btnReiniciar = root.querySelector('.restart-btn');
   if (btnReiniciar) {
     btnReiniciar.addEventListener('click', () =>
       iniciarPartida(
@@ -434,6 +449,12 @@ function render(
 
   const btnVolver = root.querySelector('button.back-to-menu')!;
   btnVolver.addEventListener('click', () =>
-    mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad),
+    mostrarPantallaInicio(
+      root,
+      getWordData,
+      setDificultad,
+      getDificultad,
+      sessionStats,
+    ),
   );
 }

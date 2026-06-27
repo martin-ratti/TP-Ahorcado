@@ -374,6 +374,29 @@ Se agregó una ruta mínima en la interfaz para alternar entre el menú inicial 
 
 ---
 
+## Fix de regresión: modo dos jugadores + flujo base
+
+> Se detectó una regresión al introducir el modo dos jugadores: el reinicio de partida, el volver al menú y la conservación de dificultad dejaron de comportarse como antes.
+
+### Qué se había roto
+
+- El botón de reinicio ya no recreaba una partida correctamente y dejaba la pantalla en un estado inconsistente.
+- El flujo de volver al menú no regresaba a la pantalla inicial esperada por los tests.
+- La dificultad elegida no se respetaba al iniciar una nueva partida tras el reinicio.
+- El marcador de sesión acumulado empezó a interferir con el flujo base si no se pasaba correctamente entre renders.
+
+### Por qué ocurrió
+
+La implementación del modo dos jugadores introdujo un estado compartido para el marcador y lo pasó por nuevas funciones de UI, pero no quedó propagado por todos los caminos del render. Eso hizo que algunos handlers reutilizaran el flujo anterior sin recibir el contexto completo necesario.
+
+### Cómo se solucionó
+
+- Se propagó el estado de sesión compartido a todos los puntos donde se re-renderiza la pantalla: el inicio de una partida, el reinicio, la vuelta al menú y el uso del teclado.
+- Se restauró el comportamiento del flujo base del juego para que el botón de reinicio vuelva a crear una partida nueva con la dificultad vigente.
+- Se mantuvo el nuevo flujo de dos jugadores sin romper las precondiciones originales del juego estándar.
+
+---
+
 ## Ajustes de UI incorporados tras los ATs
 
 > Estos cambios no agregan nuevas reglas de negocio, pero sí mejoran la integración entre la app real y los tests de aceptación.
