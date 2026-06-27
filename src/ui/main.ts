@@ -1,6 +1,6 @@
-import { Ahorcado } from "../domain/Ahorcado";
-import { vidasSegunDificultad } from "../domain/dificultad";
-import { PalabraConPista } from "../domain/palabras";
+import { Ahorcado } from '../domain/Ahorcado';
+import { vidasSegunDificultad } from '../domain/dificultad';
+import { PalabraConPista } from '../domain/palabras';
 
 const SVG_PARTES = [
   `<circle data-testid="hangman-part" cx="100" cy="40" r="15" stroke="#e94560" stroke-width="3" fill="none"/>`,
@@ -18,13 +18,18 @@ function partesAMostrar(errores: number, vidasTotales: number): number {
 }
 
 function dibujoAhorcado(partes: number, isLost: boolean = false): string {
-  const cuerpo = SVG_PARTES.slice(0, partes).map((part, index) => {
-    if (index === partes - 1 && !isLost) {
-      return part.replace('/>', ' style="animation: draw 0.4s ease-out forwards;" />');
-    }
-    return part;
-  }).join("\n");
-  const extraClass = isLost ? "shake-red" : "";
+  const cuerpo = SVG_PARTES.slice(0, partes)
+    .map((part, index) => {
+      if (index === partes - 1 && !isLost) {
+        return part.replace(
+          '/>',
+          ' style="animation: draw 0.4s ease-out forwards;" />',
+        );
+      }
+      return part;
+    })
+    .join('\n');
+  const extraClass = isLost ? 'shake-red' : '';
   return `
     <div class="gallows ${extraClass}">
       <svg width="160" height="200">
@@ -39,35 +44,45 @@ function dibujoAhorcado(partes: number, isLost: boolean = false): string {
 }
 
 function corazones(vidas: number): string {
-  return Array.from({ length: 6 }, (_, i) => 
-    `<span class="heart ${i < vidas ? "" : "lost"}">❤️</span>`
-  ).join("");
+  return Array.from(
+    { length: 6 },
+    (_, i) => `<span class="heart ${i < vidas ? '' : 'lost'}">❤️</span>`,
+  ).join('');
 }
 
 function tecladoHTML(game: Ahorcado): string {
-  if (game.terminado()) return "";
-  
+  if (game.terminado()) return '';
+
   const layout = [
-    ["Q","W","E","R","T","Y","U","I","O","P"],
-    ["A","S","D","F","G","H","J","K","L","Ñ"],
-    ["Z","X","C","V","B","N","M"]
+    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ñ'],
+    ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
   ];
 
-  const filas = layout.map(fila => {
-    const botones = fila.map(letra => {
-      const estado = game.estadoLetra(letra);
-      const disabled = estado !== "disponible" ? "disabled" : "";
-      return `<button class="key ${estado}" ${disabled}>${letra}</button>`;
-    }).join("");
-    return `<div class="keyboard-row">${botones}</div>`;
-  }).join("");
+  const filas = layout
+    .map((fila) => {
+      const botones = fila
+        .map((letra) => {
+          const estado = game.estadoLetra(letra);
+          const disabled = estado !== 'disponible' ? 'disabled' : '';
+          return `<button class="key ${estado}" ${disabled}>${letra}</button>`;
+        })
+        .join('');
+      return `<div class="keyboard-row">${botones}</div>`;
+    })
+    .join('');
 
   return `<div class="keyboard">${filas}</div>`;
 }
 
-export function mountApp(root: HTMLElement, getWordData: () => PalabraConPista): void {
-  let currentDificultad = "normal";
-  const setDificultad = (nivel: string) => { currentDificultad = nivel; };
+export function mountApp(
+  root: HTMLElement,
+  getWordData: () => PalabraConPista,
+): void {
+  let currentDificultad = 'facil';
+  const setDificultad = (nivel: string) => {
+    currentDificultad = nivel;
+  };
   const getDificultad = () => currentDificultad;
   mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad);
 }
@@ -101,15 +116,15 @@ function mostrarPantallaInicio(
       <fieldset class="dificultad" data-testid="dificultad">
         <legend>Dificultad</legend>
         <label>
-          <input type="radio" name="dificultad" value="facil" ${getDificultad() === "facil" ? "checked" : ""}>
+          <input type="radio" name="dificultad" value="facil" ${getDificultad() === 'facil' ? 'checked' : ''}>
           Fácil
         </label>
         <label>
-          <input type="radio" name="dificultad" value="normal" ${getDificultad() === "normal" ? "checked" : ""}>
+          <input type="radio" name="dificultad" value="normal" ${getDificultad() === 'normal' ? 'checked' : ''}>
           Normal
         </label>
         <label>
-          <input type="radio" name="dificultad" value="dificil" ${getDificultad() === "dificil" ? "checked" : ""}>
+          <input type="radio" name="dificultad" value="dificil" ${getDificultad() === 'dificil' ? 'checked' : ''}>
           Difícil
         </label>
       </fieldset>
@@ -118,10 +133,10 @@ function mostrarPantallaInicio(
     </section>
   `;
 
-  const fieldset = root.querySelector("fieldset")!;
-  fieldset.addEventListener("change", (e) => {
+  const fieldset = root.querySelector('fieldset')!;
+  fieldset.addEventListener('change', (e) => {
     const target = e.target as HTMLInputElement;
-    if (target.name === "dificultad") {
+    if (target.name === 'dificultad') {
       setDificultad(target.value);
       mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad);
     }
@@ -129,16 +144,22 @@ function mostrarPantallaInicio(
 
   const radios = root.querySelectorAll("input[type='radio']");
   radios.forEach((radio) => {
-    radio.addEventListener("click", () => {
+    radio.addEventListener('click', () => {
       if ((radio as HTMLInputElement).value === getDificultad()) {
         setDificultad((radio as HTMLInputElement).value);
       }
     });
   });
 
-  const btnJugar = root.querySelector("button")!;
-  btnJugar.addEventListener("click", () =>
-    iniciarPartida(root, getWordData, getDificultad(), setDificultad, getDificultad)
+  const btnJugar = root.querySelector('button')!;
+  btnJugar.addEventListener('click', () =>
+    iniciarPartida(
+      root,
+      getWordData,
+      getDificultad(),
+      setDificultad,
+      getDificultad,
+    ),
   );
 }
 
@@ -150,7 +171,11 @@ function iniciarPartida(
   getDificultad: () => string,
 ): void {
   const data = getWordData();
-  const game = new Ahorcado(data.palabra, vidasSegunDificultad(dificultad), data.pista);
+  const game = new Ahorcado(
+    data.palabra,
+    vidasSegunDificultad(dificultad),
+    data.pista,
+  );
   render(root, game, getWordData, dificultad, setDificultad, getDificultad);
 }
 
@@ -161,14 +186,19 @@ function render(
   dificultad: string,
   setDificultad: (nivel: string) => void,
   getDificultad: () => string,
-  mensaje = "",
-  pistaMostrada = false
+  mensaje = '',
+  pistaMostrada = false,
 ): void {
-  const mensajeFin = game.ganado() ? "GANASTE" : game.perdido() ? "PERDISTE" : "";
+  const mensajeFin = game.ganado()
+    ? 'GANASTE'
+    : game.perdido()
+      ? 'PERDISTE'
+      : '';
   const vidas = game.vidas();
   const pista = game.pista();
 
-  const modalHTML = game.terminado() ? `
+  const modalHTML = game.terminado()
+    ? `
     <div class="modal-overlay">
       <div class="modal-content ${game.ganado() ? 'neon-green' : 'neon-red'}">
         <h2 data-testid="message">${mensajeFin}</h2>
@@ -176,15 +206,18 @@ function render(
         <button class="back-to-menu btn-modal">Volver al menú</button>
       </div>
     </div>
-  ` : "";
+  `
+    : '';
 
-  const normalMessageHTML = !game.terminado() ? `<p data-testid="message">${mensaje}</p>` : "";
-  
+  const normalMessageHTML = !game.terminado()
+    ? `<p data-testid="message">${mensaje}</p>`
+    : '';
+
   const pistaHTML = pista
     ? pistaMostrada
       ? `<p data-testid="hint" style="color: #ffd700; font-weight: bold; margin-top: 10px;">Pista: ${pista}</p>`
       : `<button class="hint-btn" title="Ver pista">🪄 Pista</button>`
-    : "";
+    : '';
 
   root.innerHTML = `
     <section class="game-screen">
@@ -198,25 +231,43 @@ function render(
       ${pistaHTML}
       ${normalMessageHTML}
       ${tecladoHTML(game)}
-      ${!game.terminado() ? '<button class="back-to-menu" style="margin-top: 15px">Volver al menú</button>' : ""}
+      ${!game.terminado() ? '<button class="back-to-menu" style="margin-top: 15px">Volver al menú</button>' : ''}
     </section>
     ${modalHTML}
   `;
 
   if (pista && !pistaMostrada) {
-    const hintBtn = root.querySelector(".hint-btn");
-    hintBtn?.addEventListener("click", () => {
-      render(root, game, getWordData, dificultad, setDificultad, getDificultad, mensaje, true);
+    const hintBtn = root.querySelector('.hint-btn');
+    hintBtn?.addEventListener('click', () => {
+      render(
+        root,
+        game,
+        getWordData,
+        dificultad,
+        setDificultad,
+        getDificultad,
+        mensaje,
+        true,
+      );
     });
   }
 
-  const keys = root.querySelectorAll<HTMLButtonElement>(".key:not([disabled])");
-  keys.forEach(keyBtn => {
-    keyBtn.addEventListener("click", () => {
+  const keys = root.querySelectorAll<HTMLButtonElement>('.key:not([disabled])');
+  keys.forEach((keyBtn) => {
+    keyBtn.addEventListener('click', () => {
       const letra = keyBtn.textContent;
       if (!letra) return;
       game.adivinar(letra);
-      render(root, game, getWordData, dificultad, setDificultad, getDificultad, "", pistaMostrada);
+      render(
+        root,
+        game,
+        getWordData,
+        dificultad,
+        setDificultad,
+        getDificultad,
+        '',
+        pistaMostrada,
+      );
     });
   });
 
@@ -225,21 +276,36 @@ function render(
     const letra = e.key.toUpperCase();
     if (/^[A-ZÑ]$/.test(letra)) {
       game.adivinar(letra);
-      render(root, game, getWordData, dificultad, setDificultad, getDificultad, "", pistaMostrada);
+      render(
+        root,
+        game,
+        getWordData,
+        dificultad,
+        setDificultad,
+        getDificultad,
+        '',
+        pistaMostrada,
+      );
     }
   };
 
   window.onkeydown = handleKeydown;
 
-  const btnReiniciar = root.querySelector("button.secondary");
+  const btnReiniciar = root.querySelector('button.secondary');
   if (btnReiniciar) {
-    btnReiniciar.addEventListener("click", () =>
-      iniciarPartida(root, getWordData, dificultad, setDificultad, getDificultad)
+    btnReiniciar.addEventListener('click', () =>
+      iniciarPartida(
+        root,
+        getWordData,
+        dificultad,
+        setDificultad,
+        getDificultad,
+      ),
     );
   }
 
-  const btnVolver = root.querySelector("button.back-to-menu")!;
-  btnVolver.addEventListener("click", () =>
-    mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad)
+  const btnVolver = root.querySelector('button.back-to-menu')!;
+  btnVolver.addEventListener('click', () =>
+    mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad),
   );
 }

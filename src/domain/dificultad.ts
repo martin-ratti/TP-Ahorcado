@@ -1,6 +1,6 @@
 // src/domain/dificultad.ts
 
-export type Dificultad = "facil" | "normal" | "dificil";
+export type Dificultad = 'facil' | 'normal' | 'dificil';
 
 const VIDAS_POR_DIFICULTAD: Record<Dificultad, number> = {
   facil: 6,
@@ -8,7 +8,7 @@ const VIDAS_POR_DIFICULTAD: Record<Dificultad, number> = {
   dificil: 2,
 };
 
-const DIFICULTAD_POR_DEFECTO: Dificultad = "normal";
+const DIFICULTAD_POR_DEFECTO: Dificultad = 'facil';
 
 export function vidasSegunDificultad(nivel: string): number {
   if (nivel in VIDAS_POR_DIFICULTAD) {
