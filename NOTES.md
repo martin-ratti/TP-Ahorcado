@@ -338,6 +338,24 @@ Se modificó el catálogo de palabras en `palabras.ts` pasando de ser un arreglo
 
 ---
 
+## AT17 — Marcador de la sesión
+
+> El juego acumula victorias y derrotas entre partidas consecutivas y las muestra en pantalla.
+
+### UTs del objeto `Ahorcado`
+
+| #   | Descripción                                                       | Por qué existe                                                                                |
+| --- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| 1   | `resultadoSesion()` devuelve el acumulado de victorias y derrotas | La UI necesita leer un estado compartido de la sesión, no solo el estado de la partida actual |
+| 2   | Al ganar una partida se incrementa el contador de victorias       | El marcador debe reflejar el resultado final de la partida ganada                             |
+| 3   | Al perder una partida se incrementa el contador de derrotas       | El marcador debe reflejar el resultado final de la partida perdida                            |
+
+### Refactor
+
+Se agregaron contadores estáticos en `src/domain/Ahorcado.ts` para que el marcador persista entre partidas nuevas sin reiniciarse en cada inicio. La UI en `src/ui/main.ts` expone el valor con un elemento `data-testid="session-score"` y muestra el texto `Victorias: X Derrotas: Y`. Este cambio fue mínimo, local y suficiente para que el AT17 quede verde contra la app real.
+
+---
+
 ## Ajustes de UI incorporados tras los ATs
 
 > Estos cambios no agregan nuevas reglas de negocio, pero sí mejoran la integración entre la app real y los tests de aceptación.
