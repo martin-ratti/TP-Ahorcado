@@ -75,6 +75,12 @@ function tecladoHTML(game: Ahorcado): string {
   return `<div class="keyboard">${filas}</div>`;
 }
 
+export function mensajeSegunResultado(resultado: string): string {
+  if (resultado === 'repetida') return 'Letra ya ingresada';
+  if (resultado === 'invalida') return 'Entrada inválida';
+  return '';
+}
+
 export function mountApp(
   root: HTMLElement,
   getWordData: () => PalabraConPista,
@@ -236,6 +242,33 @@ function render(
     ${modalHTML}
   `;
 
+  const inputOculto = document.createElement('input');
+  inputOculto.type = 'text';
+  inputOculto.style.opacity = '0';
+  inputOculto.style.position = 'absolute';
+  inputOculto.style.zIndex = '-1';
+  inputOculto.addEventListener('keydown', (event: KeyboardEvent) => {
+    if (event.key !== 'Enter') return;
+
+    event.preventDefault();
+    const letra = inputOculto.value.trim().toUpperCase();
+    if (!letra) return;
+
+    const resultado = game.adivinar(letra);
+    inputOculto.value = '';
+    render(
+      root,
+      game,
+      getWordData,
+      dificultad,
+      setDificultad,
+      getDificultad,
+      mensajeSegunResultado(resultado),
+      pistaMostrada,
+    );
+  });
+  root.appendChild(inputOculto);
+
   if (pista && !pistaMostrada) {
     const hintBtn = root.querySelector('.hint-btn');
     hintBtn?.addEventListener('click', () => {
@@ -246,7 +279,7 @@ function render(
         dificultad,
         setDificultad,
         getDificultad,
-        mensaje,
+        `Pista: ${pista}`,
         true,
       );
     });
@@ -257,7 +290,8 @@ function render(
     keyBtn.addEventListener('click', () => {
       const letra = keyBtn.textContent;
       if (!letra) return;
-      game.adivinar(letra);
+      const resultado = game.adivinar(letra);
+      const siguienteMensaje = mensajeSegunResultado(resultado);
       render(
         root,
         game,
@@ -265,7 +299,7 @@ function render(
         dificultad,
         setDificultad,
         getDificultad,
-        '',
+        siguienteMensaje,
         pistaMostrada,
       );
     });
@@ -275,7 +309,7 @@ function render(
     if (game.terminado()) return;
     const letra = e.key.toUpperCase();
     if (/^[A-ZÑ]$/.test(letra)) {
-      game.adivinar(letra);
+      const resultado = game.adivinar(letra);
       render(
         root,
         game,
@@ -283,7 +317,7 @@ function render(
         dificultad,
         setDificultad,
         getDificultad,
-        '',
+        mensajeSegunResultado(resultado),
         pistaMostrada,
       );
     }
