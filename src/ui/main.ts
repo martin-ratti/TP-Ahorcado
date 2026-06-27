@@ -86,11 +86,18 @@ export function mountApp(
   getWordData: () => PalabraConPista,
 ): void {
   let currentDificultad = 'facil';
+  const sessionStats = { victorias: 0, derrotas: 0 };
   const setDificultad = (nivel: string) => {
     currentDificultad = nivel;
   };
   const getDificultad = () => currentDificultad;
-  mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad);
+  mostrarPantallaInicio(
+    root,
+    getWordData,
+    setDificultad,
+    getDificultad,
+    sessionStats,
+  );
 }
 
 function mostrarPantallaInicio(
@@ -98,6 +105,7 @@ function mostrarPantallaInicio(
   getWordData: () => PalabraConPista,
   setDificultad: (nivel: string) => void,
   getDificultad: () => string,
+  sessionStats: { victorias: number; derrotas: number },
 ): void {
   root.innerHTML = `
     <section data-testid="start-screen">
@@ -145,7 +153,13 @@ function mostrarPantallaInicio(
     const target = e.target as HTMLInputElement;
     if (target.name === 'dificultad') {
       setDificultad(target.value);
-      mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad);
+      mostrarPantallaInicio(
+        root,
+        getWordData,
+        setDificultad,
+        getDificultad,
+        sessionStats,
+      );
     }
   });
 
@@ -169,9 +183,17 @@ function mostrarPantallaInicio(
     ),
   );
 
-  const btnDosJugadores = root.querySelector('.two-players-btn') as HTMLButtonElement | null;
+  const btnDosJugadores = root.querySelector(
+    '.two-players-btn',
+  ) as HTMLButtonElement | null;
   btnDosJugadores?.addEventListener('click', () =>
-    mostrarPantallaDosJugadores(root, getWordData, setDificultad, getDificultad),
+    mostrarPantallaDosJugadores(
+      root,
+      getWordData,
+      setDificultad,
+      getDificultad,
+      sessionStats,
+    ),
   );
 }
 
@@ -180,6 +202,7 @@ function mostrarPantallaDosJugadores(
   getWordData: () => PalabraConPista,
   setDificultad: (nivel: string) => void,
   getDificultad: () => string,
+  sessionStats: { victorias: number; derrotas: number },
 ): void {
   root.innerHTML = `
     <section data-testid="two-players-screen">
@@ -193,19 +216,45 @@ function mostrarPantallaDosJugadores(
     </section>
   `;
 
-  const btnIniciar = root.querySelector('.start-two-players-btn') as HTMLButtonElement | null;
+  const btnIniciar = root.querySelector(
+    '.start-two-players-btn',
+  ) as HTMLButtonElement | null;
   btnIniciar?.addEventListener('click', () => {
-    const inputPalabra = root.querySelector('#secret-word') as HTMLInputElement | null;
-    const inputPista = root.querySelector('#hint-input') as HTMLInputElement | null;
+    const inputPalabra = root.querySelector(
+      '#secret-word',
+    ) as HTMLInputElement | null;
+    const inputPista = root.querySelector(
+      '#hint-input',
+    ) as HTMLInputElement | null;
     const palabra = inputPalabra?.value.trim() ?? '';
     const pista = inputPista?.value.trim() ?? '';
-    const game = new Ahorcado(palabra, vidasSegunDificultad(getDificultad()), pista);
-    render(root, game, getWordData, getDificultad(), setDificultad, getDificultad);
+    const game = new Ahorcado(
+      palabra,
+      vidasSegunDificultad(getDificultad()),
+      pista,
+      sessionStats,
+    );
+    render(
+      root,
+      game,
+      getWordData,
+      getDificultad(),
+      setDificultad,
+      getDificultad,
+    );
   });
 
-  const btnVolver = root.querySelector('button.back-to-menu') as HTMLButtonElement | null;
+  const btnVolver = root.querySelector(
+    'button.back-to-menu',
+  ) as HTMLButtonElement | null;
   btnVolver?.addEventListener('click', () =>
-    mostrarPantallaInicio(root, getWordData, setDificultad, getDificultad),
+    mostrarPantallaInicio(
+      root,
+      getWordData,
+      setDificultad,
+      getDificultad,
+      sessionStats,
+    ),
   );
 }
 
@@ -215,12 +264,14 @@ function iniciarPartida(
   dificultad: string,
   setDificultad: (nivel: string) => void,
   getDificultad: () => string,
+  sessionStats: { victorias: number; derrotas: number },
 ): void {
   const data = getWordData();
   const game = new Ahorcado(
     data.palabra,
     vidasSegunDificultad(dificultad),
     data.pista,
+    sessionStats,
   );
   render(root, game, getWordData, dificultad, setDificultad, getDificultad);
 }
@@ -376,6 +427,7 @@ function render(
         dificultad,
         setDificultad,
         getDificultad,
+        sessionStats,
       ),
     );
   }

@@ -352,7 +352,25 @@ Se modificó el catálogo de palabras en `palabras.ts` pasando de ser un arreglo
 
 ### Refactor
 
-Se agregaron contadores estáticos en `src/domain/Ahorcado.ts` para que el marcador persista entre partidas nuevas sin reiniciarse en cada inicio. La UI en `src/ui/main.ts` expone el valor con un elemento `data-testid="session-score"` y muestra el texto `Victorias: X Derrotas: Y`. Este cambio fue mínimo, local y suficiente para que el AT17 quede verde contra la app real.
+Se agregó un estado de sesión compartido en la interfaz y se lo inyectó a cada nueva instancia de `Ahorcado` para que el marcador persista entre partidas sin contaminar los tests unitarios. La UI en `src/ui/main.ts` expone el valor con un elemento `data-testid="session-score"` y muestra el texto `Victorias: X Derrotas: Y`. Este cambio fue mínimo, local y suficiente para que el AT17 quede verde contra la app real.
+
+---
+
+## AT18 — Modo Dos Jugadores
+
+> El jugador 1 ingresa una palabra secreta oculta desde una pantalla alternativa y el jugador 2 comienza a adivinarla.
+
+### UTs del objeto `Ahorcado`
+
+| #   | Descripción                                                                  | Por qué existe                                                                              |
+| --- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| 1   | El dominio acepta una palabra ingresada manualmente y la inicializa correcta | El flujo de dos jugadores necesita crear una partida con una palabra concreta, no aleatoria |
+| 2   | La pista opcional se conserva en el estado inicial del juego                 | La UI debe poder pasar una pista dada por el jugador 1 y que el dominio la exponga          |
+| 3   | El estado inicial del tablero refleja la palabra oculta correctamente        | La pantalla de juego debe mostrar el mismo enmascarado esperado por el AT de aceptación     |
+
+### Refactor
+
+Se agregó una ruta mínima en la interfaz para alternar entre el menú inicial y una pantalla de configuración de dos jugadores. Desde esa pantalla se toma la palabra secreta y la pista (si existen) y se crea un `Ahorcado` con esos valores, dejando la lógica de negocio intacta y reutilizando el render existente. Esta solución es suficiente para pasar los tests y conserva la separación de responsabilidades: la UI decide qué pantalla mostrar y el dominio decide cómo interpretar la palabra y la pista.
 
 ---
 
