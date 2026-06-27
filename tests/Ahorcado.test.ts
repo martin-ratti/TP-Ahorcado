@@ -313,7 +313,7 @@ describe('Ahorcado - Pista / Categoría', () => {
   });
 });
 
-describe('Ahorcado - marcador de la sesión', () => {
+describe('Ahorcado - resultado de la sesión', () => {
   it('acumula victorias y derrotas entre partidas consecutivas', () => {
     const juego = new Ahorcado('OSO');
 
