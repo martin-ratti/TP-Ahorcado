@@ -418,11 +418,6 @@
       gap: 6px;
     }
 
-    .two-players-icon {
-      font-size: 2.8rem;
-      line-height: 1;
-    }
-
     .two-players-title {
       font-size: 1.8rem;
       font-weight: 900;
@@ -475,23 +470,9 @@
       font-size: 0.72rem;
     }
 
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-icon {
-      position: absolute;
-      left: 12px;
-      font-size: 0.95rem;
-      pointer-events: none;
-      line-height: 1;
-    }
-
     .form-field input {
       width: 100%;
-      padding: 11px 14px 11px 36px;
+      padding: 11px 14px;
       font-size: 0.95rem;
       background: #0d1b35;
       color: #fff;
@@ -508,6 +489,10 @@
     .form-field input:focus {
       border-color: #e94560;
       box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
+    }
+
+    [data-testid="two-players-screen"] .back-to-menu {
+      margin-top: 12px;
     }
 
     /* ── modal ── */
