@@ -33,3 +33,7 @@ Then('la palabra enmascarada contiene {int} letras ocultas', async ({ page }, ca
   const ocultas = texto.split('').filter((caracter) => caracter === '_').length;
   expect(ocultas).toBe(cantidad);
 });
+
+Then('se ve la pantalla de dos jugadores', async ({ page }) => {
+  await expect(page.getByTestId('two-players-screen')).toBeVisible();
+});
