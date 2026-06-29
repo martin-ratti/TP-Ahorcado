@@ -190,17 +190,26 @@ function mostrarPantallaDosJugadores(
 ): void {
   root.innerHTML = `
     <section data-testid="two-players-screen">
-      <h1>Dos Jugadores</h1>
-      <p class="two-players-subtitle">El jugador 1 ingresa la palabra secreta</p>
+      <div class="two-players-header">
+        <span class="two-players-icon">👥</span>
+        <h2 class="two-players-title">Dos Jugadores</h2>
+        <p class="two-players-subtitle">El jugador 1 elige la palabra secreta</p>
+      </div>
 
       <div class="two-players-form">
         <div class="form-field">
           <label for="secret-word">Palabra secreta</label>
-          <input id="secret-word" type="password" placeholder="Escribí la palabra…" autocomplete="off" />
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input id="secret-word" type="password" placeholder="Escribí la palabra…" autocomplete="off" />
+          </div>
         </div>
         <div class="form-field">
           <label for="hint-input">Pista <span class="optional">(opcional)</span></label>
-          <input id="hint-input" type="text" placeholder="Ej: Es un animal" autocomplete="off" />
+          <div class="input-wrapper">
+            <span class="input-icon">💡</span>
+            <input id="hint-input" type="text" placeholder="Ej: Es un animal" autocomplete="off" />
+          </div>
         </div>
         <button class="start-two-players-btn play-btn">Iniciar partida</button>
       </div>

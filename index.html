@@ -407,30 +407,60 @@
     }
 
     /* ── dos jugadores ── */
+    [data-testid="two-players-screen"] {
+      gap: 20px;
+    }
+
+    .two-players-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .two-players-icon {
+      font-size: 2.8rem;
+      line-height: 1;
+    }
+
+    .two-players-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffb6b9, #e94560);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 4px rgba(233, 69, 96, 0.3));
+      margin: 0;
+    }
+
     .two-players-subtitle {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #8892b0;
-      letter-spacing: 1px;
-      margin-top: -8px;
+      letter-spacing: 0.5px;
     }
 
     .two-players-form {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       width: 100%;
       max-width: 340px;
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 16px;
+      padding: 24px 20px;
     }
 
     .form-field {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      text-align: left;
     }
 
     .form-field label {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -441,28 +471,43 @@
       font-weight: 400;
       text-transform: none;
       letter-spacing: 0;
-      color: #555e7a;
-      font-size: 0.75rem;
+      color: #404a62;
+      font-size: 0.72rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      font-size: 0.95rem;
+      pointer-events: none;
+      line-height: 1;
     }
 
     .form-field input {
       width: 100%;
-      padding: 12px 14px;
-      font-size: 1rem;
-      background: #16213e;
+      padding: 11px 14px 11px 36px;
+      font-size: 0.95rem;
+      background: #0d1b35;
       color: #fff;
-      border: 2px solid #0f3460;
+      border: 2px solid #1a2a4f;
       border-radius: 10px;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .form-field input::placeholder {
-      color: #3a4a6b;
+      color: #2e3d5e;
     }
 
     .form-field input:focus {
       border-color: #e94560;
+      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
     }
 
     /* ── modal ── */
