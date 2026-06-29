@@ -190,13 +190,22 @@ function mostrarPantallaDosJugadores(
 ): void {
   root.innerHTML = `
     <section data-testid="two-players-screen">
-      <h1>Modo Dos Jugadores</h1>
-      <label for="secret-word">Palabra secreta</label>
-      <input id="secret-word" type="password" />
-      <label for="hint-input">Pista</label>
-      <input id="hint-input" type="text" />
-      <button class="start-two-players-btn">Iniciar</button>
-      <button class="back-to-menu" style="margin-top: 15px">Volver al menú</button>
+      <h1>Dos Jugadores</h1>
+      <p class="two-players-subtitle">El jugador 1 ingresa la palabra secreta</p>
+
+      <div class="two-players-form">
+        <div class="form-field">
+          <label for="secret-word">Palabra secreta</label>
+          <input id="secret-word" type="password" placeholder="Escribí la palabra…" autocomplete="off" />
+        </div>
+        <div class="form-field">
+          <label for="hint-input">Pista <span class="optional">(opcional)</span></label>
+          <input id="hint-input" type="text" placeholder="Ej: Es un animal" autocomplete="off" />
+        </div>
+        <button class="start-two-players-btn play-btn">Iniciar partida</button>
+      </div>
+
+      <button class="back-to-menu">Volver al menú</button>
     </section>
   `;
 
