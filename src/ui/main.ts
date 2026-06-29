@@ -223,6 +223,16 @@ function mostrarPantallaDosJugadores(
     ) as HTMLInputElement | null;
     const palabra = inputPalabra?.value.trim() ?? '';
     const pista = inputPista?.value.trim() ?? '';
+
+    if (!palabra) {
+      if (inputPalabra) {
+        inputPalabra.focus();
+        inputPalabra.style.borderColor = '#e94560';
+        inputPalabra.style.boxShadow = '0 0 0 3px rgba(233,69,96,0.3)';
+      }
+      return;
+    }
+
     const game = new Ahorcado(
       palabra,
       vidasSegunDificultad(getDificultad()),
