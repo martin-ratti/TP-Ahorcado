@@ -8,6 +8,7 @@ const testDir = defineBddConfig({
 
 export default defineConfig({
   testDir,
+  reporter: process.env.CI ? "html" : "list",
   use: { baseURL: "http://localhost:5173" },
   webServer: {
     command: "npm run dev",
