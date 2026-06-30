@@ -19,11 +19,15 @@ Este repositorio contiene el código fuente de una versión moderna e interactiv
 
 ## 🛠️ Tecnologías y Herramientas
 * 🔵 **TypeScript:** Lenguaje principal para garantizar un tipado estricto, robustez y legibilidad.
-* ⚡ **Vite:** Entorno de desarrollo rápido y servidor local.
+* 🌐 **HTML5 & CSS3:** Tecnologías web nativas para la estructura y el diseño visual (Vanilla), sin depender de frameworks pesados.
+* ⚡ **Vite:** Entorno de desarrollo rápido, empaquetador (bundler) y servidor local.
+* 📦 **pnpm:** Gestor de paquetes moderno, rápido y eficiente en el uso de espacio en disco.
 * 🧪 **Vitest:** Framework de testing unitario para la lógica del dominio (loop interno).
-* 🥒 **Playwright & playwright-bdd:** Herramientas para la automatización de Acceptance Tests en Gherkin/Cucumber sobre un navegador web real (loop externo).
+* 🥒 **Playwright & playwright-bdd:** Herramientas para la automatización de Acceptance Tests sobre un navegador web real (loop externo).
+* 📝 **Gherkin (BDD):** Lenguaje utilizado para escribir las especificaciones y pruebas de comportamiento en lenguaje natural.
 * ⚙️ **GitHub Actions:** Pipeline de Integración Continua (CI) que automatiza validaciones en cada cambio (tests, linting y build).
 * 🚀 **GitHub Pages:** Alojamiento estático y despliegue (deploy) continuo de la aplicación para hacerla accesible públicamente.
+
 
 ---
 
