@@ -35,7 +35,7 @@ La aplicación implementa una arquitectura desacoplada y limpia, dividida estric
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        CAPA DE PRESENTACIÓN (UI)                       │
 │                                                                        │
-│   Navegador ──▶ [index.html] ──▶ [index.ts] ──▶ [main.ts]              │
+│   Navegador ──▶ [index.html] ──▶ [index.ts] ──▶ [main.ts]            │
 │                                  (Composition   (Control de Vistas,    │
 │                                   Root)          Animaciones, SVG)     │
 └───────────────────────────────────┬────────────────────────────────────┘
@@ -45,7 +45,7 @@ La aplicación implementa una arquitectura desacoplada y limpia, dividida estric
 ┌────────────────────────────────────────────────────────────────────────┐
 │                          CAPA DE DOMINIO (LOGIC)                       │
 │                                                                        │
-│   [Ahorcado.ts]  ◀──────────────  [dificultad.ts]  ◀─── [palabras.ts]  │
+│   [Ahorcado.ts]  ◀──────────────  [dificultad.ts]  ◀─── [palabras.ts] │
 │   (Reglas Puras,                  (Mapeo Vidas)         (Seam de Azar) │
 │    Cálculo en Memoria)                                                 │
 └────────────────────────────────────────────────────────────────────────┘
@@ -73,21 +73,21 @@ El desarrollo del proyecto siguió rigurosamente un enfoque de **Double Loop TDD
 ┌────────────────────────────────────────────────────────┐
 │             LOOP EXTERNO: Aceptación (ATDD)            │
 │                                                        │
-│  1. Escribir Escenario Gherkin (.feature)             │
-│  2. Ejecutar prueba con Playwright ──▶ ROJO (Honesto)  │
+│  1. Escribir Escenario Gherkin (.feature)              │
+│  2. Ejecutar prueba con Playwright ──▶ ROJO (Honesto) │
 │                                                        │
 │     ┌────────────────────────────────────────────┐     │
 │     │        LOOP INTERNO: Unitario (TDD)        │     │
 │     │                                            │     │
 │     │  a. Escribir Unit Test en Vitest           │     │
-│     │  b. Ejecutar ──▶ ROJO                      │     │
-│     │  c. Codificar mínimo código ──▶ VERDE      │     │
+│     │  b. Ejecutar ──▶ ROJO                     │     │
+│     │  c. Codificar mínimo código ──▶ VERDE     │     │
 │     │  d. Refactorizar código local              │     │
 │     │  e. ¿Falta más lógica? Recomenzar ciclo    │     │
 │     └──────────────────────┬─────────────────────┘     │
 │                            │                           │
 │  3. Integrar/Cablear la UI al Dominio                  │
-│  4. Ejecutar Aceptación ──▶ VERDE                      │
+│  4. Ejecutar Aceptación ──▶ VERDE                     │
 └────────────────────────────────────────────────────────┘
 ```
 
