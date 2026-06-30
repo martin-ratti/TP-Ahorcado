@@ -13,12 +13,17 @@
 <hr>
 
 ## 🎯 Propósito del Proyecto
-Este repositorio contiene el código fuente de una versión moderna e interactiva del tradicional juego del **Ahorcado**. Desarrollado como trabajo práctico integrador para la cátedra de **Metodologías de Desarrollo de Software**, el principal objetivo es demostrar la aplicación rigurosa de prácticas modernas de ingeniería y desarrollo de software:
+Este repositorio contiene el código fuente de una versión moderna e interactiva del tradicional juego del **Ahorcado**. Desarrollado como trabajo práctico integrador para la cátedra de **Metodologías de Desarrollo de Software**, el principal objetivo es demostrar la aplicación rigurosa de prácticas modernas de ingeniería y desarrollo de software.
 
-*   **Tipado Estricto:** Implementado integralmente en TypeScript.
-*   **Separación de Responsabilidades:** Aislamiento total de las reglas de negocio respecto de la interfaz gráfica y los eventos de E/S.
-*   **Desarrollo Guiado por Pruebas de Doble Bucle:** Adopción del flujo **Double Loop TDD (ATDD + TDD)**.
-*   **Integración y Entrega Continua (CI/CD):** Automatización de calidad y despliegue a través de GitHub Actions y GitHub Pages.
+---
+
+## 🛠️ Tecnologías y Herramientas
+* 🔵 **TypeScript:** Lenguaje principal para garantizar un tipado estricto, robustez y legibilidad.
+* ⚡ **Vite:** Entorno de desarrollo rápido y servidor local.
+* 🧪 **Vitest:** Framework de testing unitario para la lógica del dominio (loop interno).
+* 🥒 **Playwright & playwright-bdd:** Herramientas para la automatización de Acceptance Tests en Gherkin/Cucumber sobre un navegador web real (loop externo).
+* ⚙️ **GitHub Actions:** Pipeline de Integración Continua (CI) que automatiza validaciones en cada cambio (tests, linting y build).
+* 🚀 **GitHub Pages:** Alojamiento estático y despliegue (deploy) continuo de la aplicación para hacerla accesible públicamente.
 
 ---
 
