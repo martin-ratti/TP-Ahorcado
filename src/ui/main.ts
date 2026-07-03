@@ -394,7 +394,7 @@ function render(
         setDificultad,
         getDificultad,
         sessionStats,
-        `Pista: ${pista}`,
+        ``,
         true,
         dosJugadores,
       );
