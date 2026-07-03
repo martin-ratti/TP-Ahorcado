@@ -212,25 +212,28 @@
     .keyboard {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;          /* bajé de 8 a 6 para ganar espacio */
       width: 100%;
       max-width: 400px;
       margin-top: 10px;
+      padding: 0 4px;    /* margen lateral para que no toque el borde */
     }
 
     .keyboard-row {
       display: flex;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;          /* bajé de 6 a 4 */
     }
 
     .key {
-      width: 34px;
-      height: 46px;
+      flex: 1;           /* ← reemplaza width: 34px */
+      max-width: 38px;   /* cap para pantallas grandes */
+      min-width: 0;      /* permite que flex las achique sin límite inferior */
+      height: 42px;      /* un poco menos de altura también ayuda en móvil */
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 0.85rem;   /* letra más chica en vez de 1.1rem */
       font-weight: 700;
       background: #16213e;
       color: #eee;
@@ -238,6 +241,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s;
+      padding: 0;        /* importante: el padding default de button empuja el contenido */
     }
 
     .key:not([disabled]):hover {
@@ -562,6 +566,18 @@
       to {
         opacity: 1;
         transform: scale(1);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .gallows svg {
+        width: 120px;
+        height: 150px;
+      }
+
+      [data-testid="word"] {
+        font-size: 1.5rem;
+        letter-spacing: 8px;
       }
     }
   </style>
